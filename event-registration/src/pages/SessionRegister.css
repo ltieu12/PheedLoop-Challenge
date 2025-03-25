@@ -1,0 +1,10 @@
+.form-component {
+    text-align: left;
+}
+
+.name-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
