@@ -3,6 +3,8 @@ import './SessionRegister.css'
 import InputField from '../components/InputField/InputField'
 import SessionCard from '../components/SessionCard/SessionCard'
 import Modal from '../components/Modal/Modal'
+import SuccessIcon from '../assets/alert-success.svg'
+import ErrorIcon from '../assets/process-error.svg'
 
 const initialFormData = {
     firstName: '',
@@ -12,10 +14,10 @@ const initialFormData = {
 }
 
 const sessionInfo = [
-    { id: 1, title: "Intro to React", date: "May 10th, 2025", start: "09:00 AM", end: "10:00 AM" },
-    { id: 2, title: "Advanced React Patterns", date: "May 10th, 2025", start: "09:30 AM", end: "10:30 AM" },
-    { id: 3, title: "UX Best Practices", date: "May 10th, 2025", start: "10:15 AM", end: "11:00 AM" },
-    { id: 4, title: "Building Scalable APIs", date: "May 10th, 2025", start: "11:00 AM", end: "12:00 PM" },
+    { id: 1, title: "Intro to React", date: "May 10th, 2025", start: "09:00 AM", end: "1:00 PM", description: "Get started into the fundamentals of React." },
+    { id: 2, title: "Advanced React Patterns", date: "May 10th, 2025", start: "09:30 AM", end: "10:30 AM", description: "Dive deeps into React advanced concepts and patterns." },
+    { id: 3, title: "UX Best Practices", date: "May 10th, 2025", start: "10:15 AM", end: "11:00 AM", description: "Explore practices and case studies demonstrating positive user experience." },
+    { id: 4, title: "Building Scalable APIs", date: "May 11th, 2025", start: "11:00 AM", end: "12:00 PM", description: "Get started into Behind The Scene of web applications." },
 ]
 
 const convertTime = (input) => {
@@ -57,28 +59,28 @@ const SessionRegister = () => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         
         if (!data.firstName.trim()) {
-            errors.firstName = "First name is required."
+            errors.firstName = "First name is required"
         }
         else if (!textRegex.test(data.firstName)) {
-            errors.firstName = "First name should contain letters."
+            errors.firstName = "First name should contain letters"
         }
 
         if (!data.lastName.trim()) {
-            errors.lastName = "Last name is required."
+            errors.lastName = "Last name is required"
         }
         else if (!textRegex.test(data.lastName)) {
-            errors.lastName = "Last name should contain letters."
+            errors.lastName = "Last name should contain letters"
         }
 
         if (!data.email.trim()) {
-            errors.email = "Email is required."
+            errors.email = "Email is required"
         }
         else if (!emailRegex.test(data.email)) {
-            errors.email = "Email should be in valid form."
+            errors.email = "Email should be in valid form"
         }
 
         if (data.jobTitle && (!textRegex.test(data.jobTitle))) {
-            errors.jobTitle = "Job title should contain letters."
+            errors.jobTitle = "Job title should contain letters"
         }
 
         return errors
@@ -94,8 +96,10 @@ const SessionRegister = () => {
             const selectedStartTime = convertTime(selected.start)
             const selectedEndTime = convertTime(selected.end)
 
-            if (startTime < selectedEndTime && selectedStartTime < endTime) {
-                overlap.push(selected)
+            if (selected.date === session.date) {
+                if (startTime < selectedEndTime && selectedStartTime < endTime) {
+                    overlap.push(selected)
+                }
             }
         })
         
@@ -119,7 +123,6 @@ const SessionRegister = () => {
                 let overlaps = checkOverlap(session)
 
                 if (overlaps.length > 0) {
-                    console.log("Overlapping session: ", overlapSessions)
                     setOverlapSessions(overlaps)
                     setOverlapModalOpen(true)
                 }
@@ -144,12 +147,24 @@ const SessionRegister = () => {
             console.log("Errors in form validation!")
         }
         else if (selectedSession.length == 0) {
-            console.log("No session selected!")
             setEmptySessionModalOpen(true)    
         }
         else {
             setSubmittedModalOpen(true)
         }
+    }
+
+    const closeSubmittedModal = () => {
+        setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            jobTitle: ''
+        })
+
+        setSelectedSession([])
+        setOverlapSessions([])
+        setSubmittedModalOpen(false)
     }
 
     return (
@@ -200,7 +215,7 @@ const SessionRegister = () => {
 
                 <div className='form-component'>
                     <h2>Sessions Selection</h2>
-                    <p>Please select the sessions you would like to attend (without overlap in time):</p>
+                    <p>Please select the sessions you would like to attend (without overlap in time) <span id='required-field'>*</span></p>
                     <div className='session-selection'>
                         {sessionInfo.map((session) => (
                             <div key={session.id} onClick={() => toggleSelect(session)}>
@@ -209,16 +224,18 @@ const SessionRegister = () => {
                                     date={session.date}
                                     startTime={session.start}
                                     endTime={session.end}
+                                    description={session.description}
                                     isSelected={checkSelected(selectedSession, session)}
                                 />
                             </div>
                         ))}
                     </div>
                 </div>
-                <button>Submit</button>
+                <button><strong>Submit</strong></button>
             </form>
+
             {isOverlapModalOpen && (
-                <Modal title="Error" onClose={() => setOverlapModalOpen(false)}>
+                <Modal title="Error" imgSrc={ErrorIcon} altText="Error Icon" onClose={() => setOverlapModalOpen(false)}>
                     <p>You cannot select this session because it overlaps with: </p>
                     {overlapSessions.map((session) => (
                         <p><strong>{session.title} - {session.start} to {session.end}</strong></p>
@@ -228,20 +245,21 @@ const SessionRegister = () => {
             )}
 
             {isEmptySessionModalOpen && (
-                <Modal title="Error" onClose={() => setEmptySessionModalOpen(false)}>
+                <Modal title="Error" imgSrc={ErrorIcon} altText="Error Icon" onClose={() => setEmptySessionModalOpen(false)}>
                     <p>You have not selected any session. Please select at least one session to proceed.</p>
                 </Modal>
             )}
 
             {isSubmittedModalOpen && (
-                <Modal title="Success" onClose={() => setSubmittedModalOpen(false)}>
+                <Modal title="Success" imgSrc={SuccessIcon} altText="Success Icon" onClose={closeSubmittedModal}>
                     <p>You have registered successfully! Here is the summary information</p>
-                    <p>Attendee: {formData.firstName} {formData.lastName}</p>
-                    <p>Email: {formData.email}</p>
+                    <p>Attendee: <strong>{formData.firstName} {formData.lastName}</strong></p>
+                    <p>Email: <strong>{formData.email}</strong></p>
                     <p>Selected sessions:</p>
                     {selectedSession.map((session) => (
-                        <p><strong>{session.title} - {session.start} to {session.end}</strong></p>
+                        <p key={session.id}><strong>{session.title} - {session.start} to {session.end}</strong></p>
                     ))}
+                    <p>An email confirmation has been sent to you with further details. Enjoy the conference!</p>
                 </Modal>
             )}
         </>

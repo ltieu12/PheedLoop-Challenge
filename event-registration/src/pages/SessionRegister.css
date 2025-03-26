@@ -1,6 +1,7 @@
 .form-component {
     text-align: left;
     width: 100%;
+    margin-bottom: 50px;
 }
 
 .name-field {
@@ -8,4 +9,12 @@
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
+}
+
+h2 {
+    margin-bottom: 5px;
+}
+
+#required-field {
+    color: rgb(221, 3, 3);
 }

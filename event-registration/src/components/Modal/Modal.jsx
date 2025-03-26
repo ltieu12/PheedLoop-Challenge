@@ -1,12 +1,13 @@
 import './Modal.css'
 
-const Modal = ({title, children, onClose}) => {
+const Modal = ({title, children, imgSrc, altText, onClose}) => {
     return (
-        <div className="modal-bg">
-            <div className="modal-container">
+        <div className="modal-bg" onClick={onClose}>
+            <div className="modal-container" onClick={e => e.stopPropagation()}>
+                <img src={imgSrc} alt={altText}></img>
                 <h2>{title}</h2>
-                <div>{children}</div>
-                <button onClick={onClose}>Close</button>
+                <div className='modal-body'>{children}</div>
+                <button onClick={onClose}><strong>Close</strong></button>
             </div>
         </div>
     )

@@ -8,9 +8,8 @@ const SessionCard = ({sessionName, date, startTime, endTime, description, isSele
                 <div className="selected">
                     <div className='selected-card'>
                         <h3>{sessionName}</h3>
-                        <span>{date}</span>
-                        <span>{startTime} - {endTime}</span>
-                        <span>{description}</span>
+                        <span>{date} | {startTime} - {endTime}</span>
+                        <p className='session-description'><strong>Objective: </strong>{description}</p>
                     </div>
                     <div className='selected-text'>
                         <p>Selected</p>
@@ -20,9 +19,8 @@ const SessionCard = ({sessionName, date, startTime, endTime, description, isSele
             ) : (
                 <div className="session-card">
                     <h3>{sessionName}</h3>
-                    <span>{date}</span>
-                    <span>{startTime} - {endTime}</span>
-                    <span>{description}</span>
+                    <span>{date} | {startTime} - {endTime}</span>
+                    <p className='session-description'><strong>Objective: </strong>{description}</p>
                 </div>
             )}
         </>
