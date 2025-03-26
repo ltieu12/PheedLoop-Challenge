@@ -1,0 +1,37 @@
+.session-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #e4ebfd;
+    padding: 0px 15px 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.session-card:hover {
+    background-color: #cbdafd;
+}
+
+h3, p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #cbdafd;
+    padding: 0px 15px 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.selected-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.selected-text {
+    display: flex;
+    gap: 4px;
+}
