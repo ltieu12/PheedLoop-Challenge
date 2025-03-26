@@ -14,8 +14,8 @@ const initialFormData = {
 }
 
 const sessionInfo = [
-    { id: 1, title: "Intro to React", date: "May 10th, 2025", start: "09:00 AM", end: "1:00 PM", description: "Get started into the fundamentals of React." },
-    { id: 2, title: "Advanced React Patterns", date: "May 10th, 2025", start: "09:30 AM", end: "10:30 AM", description: "Dive deeps into React advanced concepts and patterns." },
+    { id: 1, title: "Intro to React", date: "May 10th, 2025", start: "9:00 AM", end: "10:00 AM", description: "Get started into the fundamentals of React." },
+    { id: 2, title: "Advanced React Patterns", date: "May 10th, 2025", start: "9:30 AM", end: "10:30 AM", description: "Dive deeps into React advanced concepts and patterns." },
     { id: 3, title: "UX Best Practices", date: "May 10th, 2025", start: "10:15 AM", end: "11:00 AM", description: "Explore practices and case studies demonstrating positive user experience." },
     { id: 4, title: "Building Scalable APIs", date: "May 11th, 2025", start: "11:00 AM", end: "12:00 PM", description: "Get started into Behind The Scene of web applications." },
 ]
@@ -215,7 +215,7 @@ const SessionRegister = () => {
 
                 <div className='form-component'>
                     <h2>Sessions Selection</h2>
-                    <p>Please select the sessions you would like to attend (without overlap in time) <span id='required-field'>*</span></p>
+                    <p>Please select the sessions you would like to attend <strong>(without overlap in time) </strong><span id='required-field'>*</span></p>
                     <div className='session-selection'>
                         {sessionInfo.map((session) => (
                             <div key={session.id} onClick={() => toggleSelect(session)}>
@@ -259,7 +259,7 @@ const SessionRegister = () => {
                     {selectedSession.map((session) => (
                         <p key={session.id}><strong>{session.title} - {session.start} to {session.end}</strong></p>
                     ))}
-                    <p>An email confirmation has been sent to you with further details. Enjoy the conference!</p>
+                    <p>Enjoy the conference!</p>
                 </Modal>
             )}
         </>
